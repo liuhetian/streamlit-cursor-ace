@@ -5,7 +5,7 @@
 ## Installation
 
 ```sh
-pip install streamlit-ace
+pip install streamlit-ace-cursor
 ```
 
 ## Getting started
