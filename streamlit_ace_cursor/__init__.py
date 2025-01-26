@@ -2,14 +2,14 @@ import streamlit as st
 
 from pathlib import Path
 from streamlit.components.v1.components import declare_component
-from streamlit_ace.version import __release__, __version__
+from streamlit_ace_cursor.version import __release__, __version__
 
 if __release__:
     _source = {"path": (Path(__file__).parent/"frontend"/"build").resolve()}
 else:
     _source = {"url": "http://localhost:3001"}
 
-_render_component = declare_component("streamlit_ace", **_source)
+_render_component = declare_component("streamlit_ace_cursor", **_source)
 
 # Source: https://github.com/ajaxorg/ace-builds/tree/master/src/mode-*.js
 LANGUAGES = [

@@ -11,15 +11,18 @@ pip install streamlit-ace
 ## Getting started
 
 ```python
-import streamlit as st
+import streamlit as st 
 
-from streamlit_ace import st_ace
+from streamlit_ace_cursor import st_ace
 
-# Spawn a new Ace editor
-content = st_ace()
+st.write("Hello World")
+code = st_ace(auto_update=False)
 
-# Display editor's content as you type
-content
+code 
+
+code2 = st_ace(auto_update=True)
+
+code2
 ```
 
 ## Demo
