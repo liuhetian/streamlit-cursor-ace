@@ -28,8 +28,8 @@ const Ace = ({ args, theme }: AceProps) => {
   let timeout: NodeJS.Timeout
 
   // Send editor content to streamlit
-  const updateStreamlit = (value: string) => {
-    Streamlit.setComponentValue(value)
+  const updateStreamlit = (code: string, cursor_position: { row: number; column: number }) => {
+    Streamlit.setComponentValue({ code, cursor_position })
     setChanged(false)
   }
 
@@ -39,7 +39,8 @@ const Ace = ({ args, theme }: AceProps) => {
 
     timeout = setTimeout(() => {
       if (args.autoUpdate) {
-        updateStreamlit(value)
+        const cursor_position = editorRef.current?.editor.getCursorPosition();
+        updateStreamlit(value, cursor_position)
       }
       else {
         setChanged(true)
@@ -63,7 +64,8 @@ const Ace = ({ args, theme }: AceProps) => {
             editor.insert("\n");
           }
           else if (changed) {
-            updateStreamlit(editor.getValue())
+            const cursor_position = editor.getCursorPosition();
+            updateStreamlit(editor.getValue(), cursor_position)
           }
         }
       })
@@ -125,7 +127,12 @@ const Ace = ({ args, theme }: AceProps) => {
               color="primary"
               disabled={!changed}
               style={{ marginTop: 10 }}
-              onClick={() => updateStreamlit(editorRef.current?.editor.getValue())}
+              onClick={() => {
+                const cursorPosition = editorRef.current?.editor.getCursorPosition();
+                if (cursorPosition) {
+                  updateStreamlit(editorRef.current?.editor.getValue(), cursorPosition);
+                }
+              }}
             >
               Apply ({editorRef.current?.editor.commands.platform === "mac" ? "Cmd" : "Ctrl"}+Enter)
             </Button>
